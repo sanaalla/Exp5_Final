@@ -1,4 +1,12 @@
-// Specifically for use with the Adafruit Feather, the pins are pre-set here!
+//Experiment 5 - Multiples and Portables
+//"FlattEarMe"
+//DIGF-6037-001 Creation & Computation
+//Digital Futures MDes, Dec. 4 2017
+//Sana Shepko, Ramona Caprariu, Kylie Caraway
+
+//Code based on Adafruit example for Music Maker featherwing. 
+
+//A portable comforting device, worn on the user's head. When feeling distressed or looking for reassurance, the user presses the button behind their ear and a compliment will play. 
 
 // include SPI, MP3 and SD libraries
 #include <SPI.h>
