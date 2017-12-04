@@ -1,5 +1,5 @@
 //Experiment 5 - Multiples and Portables
-//"FlattEarMe"
+//"FlattEar Me"
 //DIGF-6037-001 Creation & Computation
 //Digital Futures MDes, Dec. 4 2017
 //Sana Shepko, Ramona Caprariu, Kylie Caraway
@@ -13,6 +13,7 @@
 #include <SD.h>
 #include <Adafruit_VS1053.h>
 
+//List the names of the compliment audio files, so that they can be treated as a character array here and randomized on button press
 char *tracklist[] = {"track001.mp3", "track002.mp3", "track003.mp3", "track004.mp3", "track005.mp3", "track006.mp3", "track007.mp3", "track008.mp3", "track009.mp3", "track010.mp3"};
 
 
@@ -41,12 +42,6 @@ void setup() {
 
   pinMode(buttonPin, INPUT);
   Serial.println(buttonPin);
-  // if you're using Bluefruit or LoRa/RFM Feather, disable the BLE interface
-  //pinMode(8, INPUT_PULLUP);
-
-  // Wait for serial port to be opened, remove this line for 'standalone' operation
-  //while (!Serial) { delay(1); }
-
   
   if (! musicPlayer.begin()) { // initialise the music player
      Serial.println(F("Couldn't find VS1053, do you have the right pins defined?"));
@@ -54,9 +49,7 @@ void setup() {
   }
 
   Serial.println(F("VS1053 found"));
- 
-  //musicPlayer.sineTest(0x44, 500);    // Make a tone to indicate VS1053 is working
-  
+   
   if (!SD.begin(CARDCS)) {
     Serial.println(F("SD failed, or not present"));
     while (1);  // don't do anything more
@@ -84,53 +77,20 @@ void setup() {
 }
 
 void loop() {
-
+//Read the button pin
 buttonVal = digitalRead(buttonPin);  
-  // Play a file in the background, REQUIRES interrupts!
+
+//If button changes state, then play a random compliment
 if((buttonVal==1)&&(buttonPrev==0)) {
 Serial.println(F("Playing full track"));
   int compliment = random(0,10);
   musicPlayer.playFullFile(tracklist[compliment]);
 }
 
-
+//See the button value, and if it's changed state
 Serial.println(buttonVal);
 
-
-
- // Serial.println(F("Playing track 002"));
- // musicPlayer.startPlayingFile("track002.mp3");
-  
-//  Serial.print(".");
-//  // File is playing in the background
-//  if (musicPlayer.stopped()) {
-//    Serial.println("Done playing music");
-//    while (1) {
-//      delay(10);  // we're done! do nothing...
-//    }
-//  }
-//  if (Serial.available()) {
-//    char c = Serial.read();
-//    
-//    // if we get an 's' on the serial console, stop!
-//    if (c == 's') {
-//      musicPlayer.stopPlaying();
-//    }
-//    
-//    // if we get an 'p' on the serial console, pause/unpause!
-//    if (c == 'p') {
-//      if (! musicPlayer.paused()) {
-//        Serial.println("Paused");
-//        musicPlayer.pausePlaying(true);
-//      } else { 
-//        Serial.println("Resumed");
-//        musicPlayer.pausePlaying(false);
-//      }
-//    }
-//  }
-
-
-  delay(100);
+//  delay(100);
 buttonPrev = buttonVal; //store the value of this cycle to compare next loop
 
   
